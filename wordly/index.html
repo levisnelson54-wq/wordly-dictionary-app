@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wordly Dictionary SPA</title>
+    <link rel="stylesheet" href="./css/styles.css">
+</head>
+
+<body>
+    <header>
+        <h1>Wordly Dictionary</h1>
+        <p>Search for English words and discover their meanings instantly.</p>
+
+        <!-- Optional Theme Button -->
+        <button id="theme-btn" aria-label="Toggle Dark Mode">
+                🌙
+
+        </button>
+    </header>
+
+    <main>
+
+        <!-- Search Section -->
+        <section class="search-section">
+
+            <form id="search-form">
+
+                <label for="word-input">
+                    Search for a word
+                </label>
+
+                <input
+                    type="text"
+                    id="word-input"
+                    name="word"
+                    placeholder="Enter a word..."
+                    autocomplete="off"
+                    aria-label="Search for a word">
+
+                <button type="submit">
+                    Search
+                </button>
+
+            </form>
+
+        </section>
+
+        <!-- Message Section -->
+        <section class="message-section">
+
+            <p id="loading-message" class="hidden">
+                Loading...
+            </p>
+
+            <p id="error-message" role="alert"></p>
+
+        </section>
+
+        <!-- Results -->
+        <section class="results-section">
+
+            <h2 id="word"></h2>
+
+            <p id="phonetic"></p>
+
+            <button id="play-audio" class="hidden">
+                 Play Pronunciation
+            </button>
+
+            <audio id="audio" hidden></audio>
+
+            <div id="meanings"></div>
+
+            <a
+                id="source-link"
+                href="#"
+                target="_blank"
+                class="hidden">
+                View Source
+            </a>
+
+            <button id="favorite-btn">
+                ❤️ Save Word
+            </button>
+
+        </section>
+
+        <!-- Favorites -->
+        <section class="favorites-section">
+
+            <h2>❤️ Favorite Words</h2>
+
+            <div id="favorites-container">
+
+                <p id="empty-favorites">
+                    No favorite words saved yet.
+                </p>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <footer>
+
+        <p>
+            Powered by the Free Dictionary API
+        </p>
+
+    </footer>
+
+    <script src="./js/index.js" defer></script>
+
+</body>
+
+</html>
+
