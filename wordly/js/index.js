@@ -23,6 +23,19 @@ const favoritesContainer = document.getElementById("favorites-container");
 
 const resultsSection = document.querySelector(".results-section");
 
+const themeBtn = document.getElementById("theme-btn");
+
+// =======================================
+// FAVORITES
+// =======================================
+
+
+let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+let currentWord = null;
+
+
+
+
 // =======================================
 // SEARCH FORM EVENT
 // =======================================
@@ -138,6 +151,8 @@ function getAudioUrl(phonetics) {
 
 function displayWord(data) {
 
+    currentWord = data.word;
+
     wordTitle.textContent = data.word;
 
     phonetic.textContent =
@@ -150,6 +165,8 @@ function displayWord(data) {
     data.meanings.forEach(function (meaning) {
 
         const card = document.createElement("div");
+
+        card.className = "meaning-card";
 
         card.style.marginBottom = "20px";
 
@@ -234,3 +251,153 @@ playAudioBtn.addEventListener("click", function () {
     }
 
 });
+ 
+
+// Favorites
+
+// ========================================
+// SAVE FAVORITE
+// =======================================
+// SAVE FAVORITE
+// =======================================
+
+favoriteBtn.addEventListener("click", saveFavorite);
+
+function saveFavorite() {
+
+    if (!currentWord) return;
+
+    if (favorites.includes(currentWord)) {
+
+        showError("Word already saved.");
+
+        return;
+
+    }
+
+    favorites.push(currentWord);
+
+    localStorage.setItem(
+        "favorites",
+        JSON.stringify(favorites)
+    );
+
+    displayFavorites();
+
+}
+
+// =======================================
+// DISPLAY FAVORITES
+// =======================================
+
+// =======================================
+function displayFavorites() {
+
+    favoritesContainer.innerHTML = "";
+
+    if (favorites.length === 0) {
+        favoritesContainer.innerHTML =
+            "<p>No favorite words saved yet.</p>";
+        return;
+    }
+
+    favorites.forEach(function (word) {
+
+        const div = document.createElement("div");
+
+        div.className = "favorite-item";
+
+        div.innerHTML = `
+            <span>${word}</span>
+
+            <div class="favorite-buttons">
+                <button class="search-btn">🔍 Search</button>
+                <button class="remove-btn">🗑 Remove</button>
+            </div>
+        `;
+
+        const searchBtn = div.querySelector(".search-btn");
+
+        searchBtn.addEventListener("click", function () {
+            wordInput.value = word;
+            fetchWord(word);
+        });
+
+        const removeBtn = div.querySelector(".remove-btn");
+
+        removeBtn.addEventListener("click", function () {
+            removeFavorite(word);
+        });
+
+        favoritesContainer.appendChild(div);
+
+    });
+
+}
+
+
+// =======================================
+// REMOVE FAVORITE
+// =======================================
+
+function removeFavorite(word) {
+
+    favorites = favorites.filter(function(item) {
+
+        return item !== word;
+
+    });
+
+    localStorage.setItem(
+        "favorites",
+        JSON.stringify(favorites)
+    );
+
+    displayFavorites();
+
+}
+
+// =======================================
+// INITIALIZE
+// =======================================
+
+displayFavorites();
+
+
+// =======================================
+// THEME TOGGLE
+// =======================================
+
+// Load saved theme
+const savedTheme = localStorage.getItem("theme");
+
+if (savedTheme === "light") {
+
+    document.body.classList.add("light-mode");
+    themeBtn.textContent = "☀️";
+
+}
+
+// Toggle theme
+themeBtn.addEventListener("click", function () {
+
+    document.body.classList.toggle("light-mode");
+
+    if (document.body.classList.contains("light-mode")) {
+
+        localStorage.setItem("theme", "light");
+
+        themeBtn.textContent = "☀️";
+
+    } else {
+
+        localStorage.setItem("theme", "dark");
+
+        themeBtn.textContent = "🌙";
+
+    }
+
+});
+
+
+
