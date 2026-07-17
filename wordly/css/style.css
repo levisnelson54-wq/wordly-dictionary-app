@@ -26,7 +26,7 @@ body {
 =========================== */
 
 header {
-    background: #2563eb;
+    background: #ff0000;
     color: white;
     padding: 2rem;
     text-align: center;
@@ -254,7 +254,7 @@ main {
 =========================== */
 
 .favorites-section {
-    background: #1e293b;
+    background: #000800;
 
     padding: 2rem;
 
@@ -295,7 +295,7 @@ footer {
 }
 
 #error-message {
-    color: #ef4444;
+    color: #000800;
     margin-top: 15px;
 }
 
